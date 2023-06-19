@@ -1,7 +1,7 @@
 ---
 title: "A07- ggplot"
-author: "YOUR NAME"
-date: "DATE"
+author: "Madeline Mucciolo"
+date: "June 9 2023"
 output: html_notebook
 ---
 
@@ -66,12 +66,16 @@ Make a box-and-whisker plot, like Figure [18.2 of the Project: Bicycle Sharing](
 
 When you make your plot, you will likely find that the axis range is being set by a few outliers. These may be bikes that were forgotten. Arrange your scale to ignore these outliers, or filter them out.
 
-
 ```{r}
-### Your code here
-
+Trips %>%
+  ggplot(aes(x=client, y=(as.numeric(edate - sdate)/60))) +
+  geom_boxplot() +
+  coord_cartesian(ylim = c(0, 60)) +
+  labs(y="dur/60")
 
 ```
+
+- After dividing the duration by 60 to keep the numbers readable and readjusting the scale to fit better, the graph easily displays box plots of the time bikes were used for. On average casual clients tend to use the bike for longer on each occasion when compared to registered clients.
 
 
 ## Question 2: When are bikes used?
