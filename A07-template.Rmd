@@ -21,6 +21,7 @@ You can access the data from the Capital Bikeshare web site. Doing this requires
 
 ```{r}
 library(tidyverse)
+library(lubridate)
 
 station_url <- "https://mdbeckman.github.io/dcSupplement/data/DC-Stations.csv"
 Stations <- readr::read_csv(station_url)
@@ -106,47 +107,44 @@ You can use [Figure 18.3](https://dtkaplan.github.io/DataComputingEbook/project-
 ### Day of Year
 
 ```{r}
-### Your Code Here
-
+Trips %>%
+  select(sdate) %>%
+  mutate(day_year = yday(sdate)) %>% # mutating the variable to be the day of the year
+  ggplot(aes(x=day_year)) + geom_density(fill='pink')
 ```
-
-
-My observations here..... 
+- This data must have onl been collected for the last few months of the year, since the graph starts at day 275 of the year. Also, the closer to the end of the year (day 365), in general the less bikes were used. This is likely due to weather conditions and users not wanting to bike in the cold/snow.
 
 
 ### Day of Week
 
 ```{r}
-### Your Code Here
-
+Trips %>%
+  select(sdate) %>%
+  mutate(day_week = wday(sdate)) %>% # mutating the variable to be the day of the week
+  ggplot(aes(x=day_week)) + geom_density(fill='pink')
 ```
-
-
-My observations here..... 
-
+- Overall the days have a similar amount of bike uasage. Friday appears to have slightly higher usage than the others (day 5).
 
 
 ### Hour of Day
 
 ```{r}
-### Your Code Here
-
+Trips %>%
+  select(sdate) %>%
+  mutate(hour_day = hour(sdate)) %>% # mutating the variable to be the hour of the day
+  ggplot(aes(x=hour_day)) + geom_density(fill='pink')
 ```
-
-
-My observations here..... 
-
-
+- Bikes are used the most around the morning and night rush hour times (8-9 and 5-6). This is most likely caused by people transporting to and from work/school. 
 
 ### Minute of Hour
 
 ```{r}
-### Your Code Here
-
+Trips %>%
+  select(sdate) %>%
+  mutate(min_hour = minute(sdate)) %>% # mutating the variable to be the minute of the hour
+  ggplot(aes(x=min_hour)) + geom_density(fill='pink')
 ```
-
-
-My observations here..... 
+- There don't appear to be any certain times during each hour that more bikes are used.
 
 
 ## Question 3: Grouping
