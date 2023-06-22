@@ -186,6 +186,9 @@ Simple2 <-
   Simple %>%
   rename(estation = sstation, lat2 = lat, long2 = long)
 
+
+head(Simple)
+head(Simple2)
 ```
 
 Look at the `head()` of `Simple` and `Simple2` and make sure you understand how they are related to `Stations.`
@@ -207,6 +210,7 @@ PairDistances <-
   mutate(distance = haversine(lat, long, lat2, long2)) %>%
   select(sstation, estation, distance)
 
+head(PairDistances)
 ```
 
 
@@ -219,20 +223,18 @@ Our goal here is to recreate [Figure 18.5](https://dtkaplan.github.io/DataComput
 
 
 ```{r}
-### My code here
+PairDistances %>%
+  inner_join(Trips) %>%
+  ggplot(aes(x=distance)) + geom_density()
 
+PairDistances %>%
+  ggplot(aes(x=distance)) + geom_density()
 ```
-
-
+- The distance of trips tends to be much shorter than the distance between each station. 
 
 
 #### Extra Credit: Joining and Variable Names in R
 
 Look at the variables in `Stations` and `Trips` and explain why `Simple` and `Simple2` were given different variable names for the station. 
-
-Optional Extra credit answer here.....
-
-
-
 
 
