@@ -152,11 +152,15 @@ Trips %>%
 Group the bike rentals by three variables: hour of the day, day of the week, and client type. Find the total number of events in each grouping and plot this count versus hour. Use the group aesthetic to represent one of the other variables and faceting to represent the other. Comment on any general trends you see.
 
 ```{r}
-### My Code here
-
+Trips %>%
+  select(sdate, client) %>%
+  mutate(hour_day=hour(sdate), day_week=wday(sdate)) %>%
+  group_by(client, hour_day, day_week) %>%
+  summarise(total = n()) %>%
+  ggplot(aes(x=hour_day, y=total, group=day_week, color=day_week)) + geom_line() + facet_wrap(vars(client))
+  
 ```
-
-My comments here.....
+- It appears that registered users much more consistently use the bikes during rush hours, with the exception of on the weekends. Casual users, on the other hand, tend to have more sporatic usage throughout the week, usually centered around the middle of the day.
 
 
 ## Question 4: How Far? 
